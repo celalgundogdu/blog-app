@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  config:
+    import: optional:file:.env[.properties]
+  servlet:
+    multipart:
+      max-file-size: 2MB
+  flyway:
+   baseline-on-migrate: true
+   enabled: true
+   user: ${SPRING_DATASOURCE_USERNAME}
+   password: ${SPRING_DATASOURCE_PASSWORD}
+   baseline-description: "init"
+   baseline-version: 0
+
+cloudinary:
+  url: cloudinary://${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}@${CLOUDINARY_CLOUD_NAME}
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+
+resilience4j:
+  rate-limiter:
+    instances:
+      auth_limiter:
+        limit-for-period: 5
+        limit-refresh-period: 1h
+        timeout-duration: 5s
